@@ -70,10 +70,10 @@ func main() {
 		{
 			Name:      "firehose",
 			ShortName: "f",
-			Usage:     "all data",
+			Usage:     "firehose <client_id>",
 			Action: func(c *cli.Context) {
 				consumer := noaa.NewNoaa(c.Args().First(), &tls.Config{InsecureSkipVerify: true}, nil)
-				messages, err := consumer.Firehose(authToken())
+				messages, err := consumer.Firehose(c.Args().Get(1), authToken())
 				if err != nil {
 					panic(err)
 				}
