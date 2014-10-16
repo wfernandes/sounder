@@ -2,10 +2,8 @@ package main
 
 import (
 	"github.com/codegangsta/cli"
-	"github.com/cloudfoundry/dropsonde/autowire/metrics"
-	"github.com/cloudfoundry/dropsonde/autowire/logs"
-	"github.com/cloudfoundry/dropsonde/events"
 	"github.com/cloudfoundry/noaa"
+	"github.com/cloudfoundry/noaa/events"
 	"fmt"
 	"crypto/tls"
 	"encoding/json"
@@ -24,29 +22,6 @@ func main() {
 	app.Usage = "acceptance tool for the metric system"
 
 	app.Commands = []cli.Command{
-		{
-			Name:      "emit",
-			ShortName: "e",
-			Usage:     "emit metrics",
-			Action: func(*cli.Context) {
-				metrics.IncrementCounter("counter")
-				metrics.SendValue("value", 42.0, "unknown")
-
-				fmt.Println("metrics sent")
-			},
-		},
-
-		{
-			Name:      "log",
-			ShortName: "l",
-			Usage:     "emit logs",
-			Action: func(c *cli.Context) {
-				logs.SendAppLog(c.Args().First(), "This is a log message", "sounder", "0")
-				logs.SendAppErrorLog(c.Args().First(), "This is a error message", "sounder", "0")
-				fmt.Println("logs sent")
-			},
-		},
-
 		{
 			Name:      "stream",
 			ShortName: "s",
